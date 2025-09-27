@@ -50,7 +50,9 @@ export function ExpenseTrackerScreen() {
   const deleteMutation = useDeleteExpense();
   console.log(data, 'jfhdjhjdh');
 
-  if (isLoading) {
+  const totalExpenses = data?.reduce((sum, item) => sum + item.amount, 0) || 0;
+
+  if (isLoading && !data) {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color="#007bff" />
@@ -101,7 +103,11 @@ export function ExpenseTrackerScreen() {
 
   return (
     <SafeAreaView style={styles.flex_1}>
-      <HomeHeader />
+      <HomeHeader
+        userName="Ankur Ojha"
+        totalExpenses={totalExpenses}
+        todayExpenses={'--'}
+      />
       <View style={styles.container}>
         <ExpenseList
           expenses={data || []}
